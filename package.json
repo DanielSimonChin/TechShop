@@ -1,0 +1,14 @@
+{
+    "name": "techshop",
+    "version": "1.0.0",
+    "description": "MERN shopping cart application",
+    "main": "server.js",
+    "scripts": {
+        "start": "node backend/server"
+    },
+    "author": "Daniel Chin",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.18.2"
+    }
+}
