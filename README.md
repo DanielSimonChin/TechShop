@@ -1,6 +1,6 @@
 # TechShop
-Full-stack eCommerce application for buying and selling tech products. It has a full-featured shopping cart with PayPal and credit/debit payment options.
-Website URL: https://techshop-5qlc.onrender.com
+Full-stack eCommerce application for buying and selling tech products. Built with ReactJS, MongoDB, Express, Node.js <br/>
+Website URL: https://techshop-live.netlify.app/
 
 
 ## Features
@@ -27,22 +27,24 @@ Website URL: https://techshop-5qlc.onrender.com
 
 ### Env Variables
 
-Rename the `.env.example` file to `.env` and add the following
+Create `.env` file in the /backend folder.
 
 ```
-NODE_ENV = development
-PORT = 5000
-MONGO_URI = your mongodb uri
-JWT_SECRET = 'abc123'
-PAYPAL_CLIENT_ID = your paypal client id
-PAGINATION_LIMIT = 8
+NODE_ENV=<development or production>
+PORT=5000
+MONGO_URI=<your mongo db uri>
+JWT_SECRET=<arbitrary jwt secret key>
+PAYPAL_CLIENT_ID=<your paypal client id>
+PAYPAL_APP_SECRET=<your pay pal app secret>
+PAGINATION_LIMIT=8
+PAYPAL_API_URL=https://api-m.sandbox.paypal.com
+CORS_ORIGIN=http://localhost:<PORT>
 ```
-
-Change the JWT_SECRET and PAGINATION_LIMIT to what you want
 
 ### Install Dependencies (frontend & backend)
 
 ```
+cd backend
 npm install
 cd frontend
 npm install
@@ -51,12 +53,11 @@ npm install
 ### Run
 
 ```
-
 # Run frontend (:3000) & backend (:5000)
-npm run dev
+npm start client
 
 # Run backend only
-npm run server
+node server.js
 ```
 
 ## Build & Deploy
