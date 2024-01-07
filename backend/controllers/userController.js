@@ -66,7 +66,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   const serialized = serialize("jwt", null, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: "None",
     maxAge: -1,
     path: "/",
   });
