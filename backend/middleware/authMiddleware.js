@@ -4,10 +4,9 @@ const User = require("../models/userModel.js");
 
 // Protect routes
 const protect = asyncHandler(async (req, res, next) => {
-  let token;
+  const { cookies } = req;
 
-  // Reed the JWT from the cookie
-  token = req.cookies.jwt;
+  const token = cookies.jwt;
 
   if (token) {
     try {

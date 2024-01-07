@@ -1,6 +1,7 @@
 const asyncHandler = require("../middleware/asyncHandler.js");
 const User = require("../models/userModel.js");
 const generateToken = require("../utils/generateToken.js");
+const { serialize } = require("cookie");
 
 // @desc    Auth user and get token
 // @route   POST /api/users/login
@@ -62,10 +63,15 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/logout
 // @access  Private
 const logoutUser = asyncHandler(async (req, res) => {
-  res.cookie("jwt", "", {
+  const serialized = serialize("jwt", null, {
     httpOnly: true,
-    expires: new Date(0),
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: -1,
+    path: "/",
   });
+
+  res.setHeader("Set-Cookie", serialized);
 
   res.status(200).json({ message: "Logged out successfully" });
 });

@@ -1,17 +1,20 @@
 const jwt = require("jsonwebtoken");
+const { serialize } = require("cookie");
 
 const generateToken = (res, userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: 60 * 60 * 24 * 30,
   });
 
-  // Set JWT as an HTTP-Only cookie
-  res.cookie("jwt", token, {
+  const serializedToken = serialize("jwt", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV !== "development",
-    sameSite: "none",
-    maxAge: 30 * 24 * 60 * 1000, // 30 days
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 60 * 60 * 24 * 30, // 30 days
+    path: "/",
   });
+
+  res.setHeader("Set-Cookie", serializedToken);
 };
 
 module.exports = generateToken;
