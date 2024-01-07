@@ -1,6 +1,6 @@
-import asyncHandler from "../middleware/asyncHandler.js";
-import User from "../models/userModel.js";
-import generateToken from "../utils/generateToken.js";
+const asyncHandler = require("../middleware/asyncHandler.js");
+const User = require("../models/userModel.js");
+const generateToken = require("../utils/generateToken.js");
 
 // @desc    Auth user and get token
 // @route   POST /api/users/login
@@ -181,7 +181,7 @@ const updateUserById = asyncHandler(async (req, res) => {
   }
 });
 
-export {
+module.exports = {
   authUser,
   registerUser,
   logoutUser,

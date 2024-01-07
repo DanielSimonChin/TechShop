@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const reviewSchema = mongoose.Schema(
   {
@@ -37,6 +37,10 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     image: {
+      type: String,
+      required: true,
+    },
+    fileName: {
       type: String,
       required: true,
     },
@@ -81,4 +85,4 @@ const productSchema = new mongoose.Schema(
 
 const Product = mongoose.model("Product", productSchema);
 
-export default Product;
+module.exports = Product;

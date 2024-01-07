@@ -1,8 +1,11 @@
-import asyncHandler from "../middleware/asyncHandler.js";
-import Order from "../models/orderModel.js";
-import Product from "../models/productModel.js";
-import { calcPrices } from "../utils/calcPrices.js";
-import { verifyPayPalPayment, checkIfNewTransaction } from "../utils/paypal.js";
+const asyncHandler = require("../middleware/asyncHandler.js");
+const Order = require("../models/orderModel.js");
+const Product = require("../models/productModel.js");
+const calcPrices = require("../utils/calcPrices.js");
+const {
+  verifyPayPalPayment,
+  checkIfNewTransaction,
+} = require("../utils/paypal.js");
 
 // @desc    Create a new order
 // @route   POST /api/orders
@@ -93,7 +96,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 
   if (order) {
     // check the correct amount was paid
-    const paidCorrectAmount = order.totalPrice.toString() === value;
+    const paidCorrectAmount = order.totalPrice.toFixed(2).toString() === value;
     if (!paidCorrectAmount) throw new Error("Incorrect amount paid");
 
     order.isPaid = true;
@@ -141,7 +144,7 @@ const getOrders = asyncHandler(async (req, res) => {
   res.status(200).json(orders);
 });
 
-export {
+module.exports = {
   addOrderItems,
   getMyOrders,
   getOrderById,

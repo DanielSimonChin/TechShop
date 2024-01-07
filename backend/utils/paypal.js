@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
 const { PAYPAL_CLIENT_ID, PAYPAL_APP_SECRET, PAYPAL_API_URL } = process.env;
 
@@ -47,7 +47,7 @@ async function getPayPalAccessToken() {
  * @throws {Error} If there's an error in querying the database.
  *
  */
-export async function checkIfNewTransaction(orderModel, paypalTransactionId) {
+async function checkIfNewTransaction(orderModel, paypalTransactionId) {
   try {
     // Find all documents where Order.paymentResult.id is the same as the id passed paypalTransactionId
     const orders = await orderModel.find({
@@ -70,7 +70,7 @@ export async function checkIfNewTransaction(orderModel, paypalTransactionId) {
  * @throws {Error} If the request is not successful.
  *
  */
-export async function verifyPayPalPayment(paypalTransactionId) {
+async function verifyPayPalPayment(paypalTransactionId) {
   const accessToken = await getPayPalAccessToken();
   const paypalResponse = await fetch(
     `${PAYPAL_API_URL}/v2/checkout/orders/${paypalTransactionId}`,
@@ -89,3 +89,5 @@ export async function verifyPayPalPayment(paypalTransactionId) {
     value: paypalData.purchase_units[0].amount.value,
   };
 }
+
+module.exports = { checkIfNewTransaction, verifyPayPalPayment };

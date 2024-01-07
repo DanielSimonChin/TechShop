@@ -1,5 +1,5 @@
-import asyncHandler from "../middleware/asyncHandler.js";
-import Product from "../models/productModel.js";
+const asyncHandler = require("../middleware/asyncHandler.js");
+const Product = require("../models/productModel.js");
 
 // @desc    Fetch all products
 // @route   GET /api/products
@@ -43,6 +43,7 @@ const createProduct = asyncHandler(async (req, res) => {
     price: 0,
     user: req.user._id,
     image: "/images/sample.jpg",
+    fileName: "/images/sample.jpg",
     brand: "Sample brand",
     category: "Sample category",
     countInStock: 0,
@@ -58,8 +59,16 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
-    req.body;
+  const {
+    name,
+    price,
+    description,
+    image,
+    fileName,
+    brand,
+    category,
+    countInStock,
+  } = req.body;
 
   const product = await Product.findById(req.params.id);
 
@@ -68,6 +77,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.price = price;
     product.description = description;
     product.image = image;
+    product.fileName = fileName;
     product.category = category;
     product.countInStock = countInStock;
     product.brand = brand;
@@ -144,7 +154,7 @@ const getTopProducts = asyncHandler(async (req, res) => {
   res.status(200).json(products);
 });
 
-export {
+module.exports = {
   getProductById,
   getProducts,
   createProduct,

@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
-  useUploadProductImageMutation,
 } from "../../slices/productsApiSlice";
 
 const ProductEditScreen = () => {
@@ -17,6 +16,7 @@ const ProductEditScreen = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
+  const [fileName, setFileName] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
@@ -31,9 +31,6 @@ const ProductEditScreen = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
-  const [uploadProductImage, { isLoading: loadingUpload }] =
-    useUploadProductImageMutation();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,6 +38,7 @@ const ProductEditScreen = () => {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
+      setFileName(product.fileName);
       setBrand(product.brand);
       setCategory(product.category);
       setCountInStock(product.countInStock);
@@ -56,6 +54,7 @@ const ProductEditScreen = () => {
       name,
       price,
       image,
+      fileName,
       brand,
       category,
       countInStock,
@@ -72,15 +71,23 @@ const ProductEditScreen = () => {
   };
 
   const uploadFileHandler = async (e) => {
-    const formData = new FormData();
-    formData.append("image", e.target.files[0]);
-    try {
-      const res = await uploadProductImage(formData).unwrap();
-      toast.success(res.message);
-      setImage(res.image);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
+    const selectedFile = e.target.files[0];
+    const base64 = await converToBase64(selectedFile);
+    setImage(base64);
+    setFileName(selectedFile.name);
+  };
+
+  const converToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
   };
 
   return (
@@ -118,23 +125,6 @@ const ProductEditScreen = () => {
                 onChange={(e) => setPrice(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
-            <Form.Group controlId="image" className="my-2">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Image URL"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.Control
-                type="file"
-                label="Choose file"
-                onChange={uploadFileHandler}
-              ></Form.Control>
-            </Form.Group>
-
-            {loadingUpload && <Loader />}
 
             <Form.Group controlId="brand" className="my-2">
               <Form.Label>Brand</Form.Label>
@@ -174,6 +164,19 @@ const ProductEditScreen = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="image" className="my-2">
+              <Form.Label>Image</Form.Label>
+              <br />
+              <Form.Label>Current: {fileName}</Form.Label>
+              <br />
+              <input
+                type="file"
+                label="Select image file"
+                accept=".jpeg, .png, .jpg"
+                onChange={(e) => uploadFileHandler(e)}
+              />
             </Form.Group>
 
             <Button type="submit" variant="primary" className="my-2">
