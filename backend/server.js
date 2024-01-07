@@ -1,6 +1,5 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
 const connectDB = require("./config/db.js");
 const productRoutes = require("./routes/productRoutes.js");
 const userRoutes = require("./routes/userRoutes.js");
@@ -15,12 +14,6 @@ connectDB();
 
 const app = express();
 
-app.use(
-  cors({
-    credentials: true,
-    origin: true,
-  })
-);
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
