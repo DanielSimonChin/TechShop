@@ -11,6 +11,7 @@ import {
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import Paginate from "../../components/Paginate";
+import Meta from "../../components/Meta";
 
 const ProductListScreen = () => {
   const { pageNumber } = useParams();
@@ -49,6 +50,8 @@ const ProductListScreen = () => {
   };
   return (
     <>
+      <Meta title="Product List" />
+
       <Row className="align-items-center">
         <Col>
           <h1>Products</h1>

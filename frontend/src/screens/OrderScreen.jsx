@@ -20,6 +20,7 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import Meta from "../components/Meta";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -111,6 +112,7 @@ const OrderScreen = () => {
     <Message variant="danger">{error?.data?.message || error.error}</Message>
   ) : (
     <>
+      <Meta title="Order Page" />
       <h1>Order {order._id}</h1>
       <Row>
         <Col md={8}>
