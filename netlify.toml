@@ -1,0 +1,12 @@
+[build]
+  command = "cd frontend && npm run build"  
+  publish = "frontend/build"  
+  base = "/"
+
+[build.environment]
+  NODE_ENV = "production"
+  
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
