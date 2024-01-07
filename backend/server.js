@@ -16,10 +16,7 @@ connectDB();
 const app = express();
 
 app.use(function (req, res, next) {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "http://localhost:3000, techshop-live.netlify.app"
-  );
+  res.setHeader("Access-Control-Allow-Origin", process.env.CORS_ORIGIN);
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -32,7 +29,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(cors({ origin: "http://localhost:3000, techshop-live.netlify.app" }));
+app.use(cors({ origin: process.env.CORS_ORIGIN }));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
