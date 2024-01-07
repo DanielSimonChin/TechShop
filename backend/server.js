@@ -31,6 +31,10 @@ app.get("/api/config/paypal", (req, res) =>
 app.use(notFound);
 app.use(errorHandler);
 
+app.get("/", (req, res) => {
+  res.send("TechShop API is running!");
+});
+
 app.listen(port, () =>
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${port}`)
 );
