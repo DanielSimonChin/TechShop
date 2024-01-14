@@ -69,7 +69,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     sameSite: "None",
     maxAge: -1,
     path: "/",
-    domain: "vercel.app",
+    domain: ".vercel.app",
   });
 
   res.setHeader("Set-Cookie", serialized);
