@@ -1,6 +1,6 @@
 # TechShop
 Full-stack eCommerce application for buying and selling tech products. Built with ReactJS, MongoDB, Express, Node.js <br/>
-Website URL: https://techshop-live.netlify.app/
+Website URL: https://techshop-live.vercel.app/
 
 
 ## Features
