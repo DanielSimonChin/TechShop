@@ -12,7 +12,6 @@ const generateToken = (res, userId) => {
     sameSite: "None",
     maxAge: 60 * 60 * 24 * 30, // 30 days
     path: "/",
-    domain: "vercel.app",
   });
 
   res.setHeader("Set-Cookie", serializedToken);
