@@ -19,15 +19,17 @@ const LoginScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
+  const hasJwtCookie = document.cookie.includes("jwt=");
+
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const redirect = sp.get("redirect") || "/";
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && hasJwtCookie) {
       navigate(redirect);
     }
-  }, [userInfo, redirect, navigate]);
+  }, [hasJwtCookie, userInfo, redirect, navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();

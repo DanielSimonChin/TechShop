@@ -2,7 +2,6 @@ const express = require("express");
 const {
   authUser,
   registerUser,
-  logoutUser,
   getUserProfile,
   updateUserProfile,
   getUsers,
@@ -15,7 +14,6 @@ const { protect, admin } = require("../middleware/authMiddleware.js");
 const router = express.Router();
 
 router.route("/").post(registerUser).get(protect, admin, getUsers);
-router.post("/logout", logoutUser);
 router.post("/auth", authUser);
 router
   .route("/profile")

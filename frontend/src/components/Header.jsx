@@ -2,7 +2,6 @@ import React from "react";
 import { Badge, Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import SearchBox from "./SearchBox";
@@ -15,11 +14,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [logoutApiCall] = useLogoutMutation();
-
   const logoutHandler = async () => {
     try {
-      await logoutApiCall().unwrap();
       dispatch(logout());
       dispatch(resetCart());
       navigate("/login");
